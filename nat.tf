@@ -1,5 +1,5 @@
 resource "aws_eip" "eip-ngw-1" {
-  depends_on = [ aws_internet_gateway.flex360-igw ]
+  depends_on = [aws_internet_gateway.flex360-igw]
 
 }
 
@@ -7,7 +7,7 @@ resource "aws_nat_gateway" "ngw-1" {
   allocation_id = aws_eip.eip-ngw-1.id
   subnet_id     = aws_subnet.subnet-public-1.id
   depends_on    = [aws_internet_gateway.flex360-igw]
-  
+
 }
 
 resource "aws_route_table" "rt-private" {
