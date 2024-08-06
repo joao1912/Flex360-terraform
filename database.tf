@@ -30,6 +30,10 @@ resource "aws_security_group_rule" "egress-rds-rule" {
 
 resource "aws_security_group" "sg-db" {
 
+    vpc_id = aws_vpc.flex360-vpc.id
+    name = "database"
+    description = "Acesso tcp via ec2 do grupo de auto-scaling"
+
 }
 
 resource "aws_db_instance" "database-flex360" {
