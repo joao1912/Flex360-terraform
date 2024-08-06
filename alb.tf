@@ -26,9 +26,9 @@ resource "aws_security_group_rule" "egress_SG_alb" {
 
 resource "aws_lb_target_group" "TG_flex360" {
 
-  name   = "TG-flex360"
-  port   = 80
-  vpc_id = aws_vpc.flex360-vpc.id
+  name     = "TG-flex360"
+  port     = 80
+  vpc_id   = aws_vpc.flex360-vpc.id
   protocol = "HTTP"
 
   health_check {
