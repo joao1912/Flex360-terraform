@@ -46,6 +46,14 @@ resource "aws_subnet" "subnet-private-3" {
 
 }
 
+resource "aws_subnet" "subnet-private-4" {
+  vpc_id                  = aws_vpc.flex360-vpc.id
+  cidr_block              = var.subnet_private_4_cidr
+  map_public_ip_on_launch = "false"
+  availability_zone       = var.az2
+
+}
+
 resource "aws_internet_gateway" "flex360-igw" {
   vpc_id = aws_vpc.flex360-vpc.id
 

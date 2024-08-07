@@ -30,9 +30,3 @@ resource "aws_route_table_association" "subnet-private-2" {
   route_table_id = aws_route_table.rt-private.id
 
 }
-
-resource "aws_route_table_association" "subnet-private-3" {
-  subnet_id      = aws_subnet.subnet-private-3.id
-  route_table_id = aws_route_table.rt-private.id
-
-}

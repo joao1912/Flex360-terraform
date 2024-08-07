@@ -67,3 +67,8 @@ variable "subnet_private_3_cidr" {
   type    = string
   default = "172.32.64.0/20"
 }
+
+variable "subnet_private_4_cidr" {
+  type    = string
+  default = "172.32.80.0/20"
+}
