@@ -47,14 +47,12 @@ resource "aws_db_instance" "database-flex360" {
   allocated_storage    = 5
   storage_type         = "gp2"
   publicly_accessible  = false
-  allow_major_version_upgrade = true
 
   skip_final_snapshot = true
 
   backup_retention_period = 7
   multi_az                = false
 
-  availability_zone      = aws_subnet.subnet-private-3.id
   db_name                = "flex360"
   vpc_security_group_ids = [aws_security_group.sg-db.id]
   db_subnet_group_name   = aws_db_subnet_group.rds-subnet-group.name
