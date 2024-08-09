@@ -38,15 +38,15 @@ resource "aws_security_group" "sg-db" {
 
 resource "aws_db_instance" "database-flex360" {
 
-  identifier           = "database-flex360"
-  engine               = "mysql"
-  engine_version       = "8.0.23"
-  instance_class       = "db.t2.micro"
-  username             = "joao"
-  password             = "senha123"
-  allocated_storage    = 5
-  storage_type         = "gp2"
-  publicly_accessible  = false
+  identifier          = "database-flex360"
+  engine              = "mysql"
+  engine_version      = "8.0.23"
+  instance_class      = "db.t2.micro"
+  username            = "joao"
+  password            = "senha123"
+  allocated_storage   = 5
+  storage_type        = "gp2"
+  publicly_accessible = false
 
   skip_final_snapshot = true
 
