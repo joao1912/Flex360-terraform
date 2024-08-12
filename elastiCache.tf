@@ -1,7 +1,7 @@
 
 resource "aws_elasticache_subnet_group" "subnetes_caches" {
   name       = "subnetes_privates_cache"
-  subnet_ids = [aws_subnet.subnet-private-3.id, aws_subnet.subnet-private-4.id]
+  subnet_ids = [aws_subnet.subnet-private-1.id, aws_subnet.subnet-private-2.id]
 
 }
 
