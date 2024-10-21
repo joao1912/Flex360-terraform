@@ -40,4 +40,4 @@ echo "PROFILE=prod" >> /config/env/.env
 
 docker pull joaopedrot1912/flex360:latest
 
-docker run -d -p 80:80 -v /config/env/.env:/app/.env joaopedrot1912/flex360-api
+docker run -d --restart always -p 80:80 -v /config/env/.env:/app/.env joaopedrot1912/flex360-api
