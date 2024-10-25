@@ -34,7 +34,7 @@ resource "aws_lb_target_group" "TG_flex360" {
   health_check {
 
     interval            = 50
-    path                = "/"
+    path                = "/health"
     port                = 80
     protocol            = "HTTP"
     healthy_threshold   = 5
