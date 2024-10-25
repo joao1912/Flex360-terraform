@@ -2,7 +2,7 @@
 
 sudo yum update -y
 
-sudo yum install -y docker
+sudo yum install -y docker jq
 
 sudo usermod -aG docker $USER
 
@@ -11,6 +11,8 @@ sudo systemctl start docker
 sudo systemctl enable docker
 
 mkdir -p /config/env
+
+aws configure set region us-east-1
 
 PATH_ENV="/config/env/.env"
 
@@ -22,7 +24,7 @@ BUCKET_NAME=$(aws ssm get-parameter --name bucket-flex360 --query "Parameter.Val
 
 SECRET_KEY=$(aws secretsmanager get-secret-value --secret-id prod/token/secret_key --query "SecretString" --output text)
 
-DB_NAME="flex-database"
+DB_NAME="flex360db"
 DB_PORT=$(echo "$DB_DATA" | grep '^DB_PORT=' | cut -d '=' -f2)
 DB_HOST=$(echo "$DB_DATA" | grep '^DB_HOST=' | cut -d '=' -f2)
 
@@ -37,7 +39,5 @@ echo "HTTP_ORIGIN=$HTTP_ORIGIN" >> /config/env/.env
 echo "SECRET_KEY=$SECRET_KEY" >> /config/env/.env
 
 echo "PROFILE=prod" >> /config/env/.env
-
-docker pull joaopedrot1912/flex360:latest
 
 docker run -d --restart always -p 80:80 -v /config/env/.env:/app/.env joaopedrot1912/flex360-api

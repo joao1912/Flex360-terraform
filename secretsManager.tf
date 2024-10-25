@@ -33,7 +33,7 @@ resource "aws_ssm_parameter" "front_flex360_origin" {
   name  = "front-flex360-origin"
   depends_on = [ aws_cloudfront_distribution.s3_distribution ]
   type  = "String"
-  value = join("", ["https://", aws_cloudfront_distribution.s3_distribution.domain_name])
+  value = join("", ["http://", aws_cloudfront_distribution.s3_distribution.domain_name])
   tags = {
     Name = "flex-360-origin-parameter"
   }

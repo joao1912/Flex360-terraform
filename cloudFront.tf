@@ -1,7 +1,6 @@
-
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "http://flex360-front-ae8fh.s3-website-us-east-1.amazonaws.com"
+    domain_name = "flex360-front-ae8fh.s3-website-us-east-1.amazonaws.com"
     origin_id   = "S3-flex-360"
 
     custom_origin_config {
@@ -42,7 +41,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = false
+    cloudfront_default_certificate = true
   }
 
   tags = {
