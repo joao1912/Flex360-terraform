@@ -53,7 +53,7 @@ resource "aws_db_instance" "database-flex360" {
   backup_retention_period = 7
   multi_az                = false
 
-  db_name                = "flex360"
+  db_name                = "flex-database"
   vpc_security_group_ids = [aws_security_group.sg-db.id]
   db_subnet_group_name   = aws_db_subnet_group.rds-subnet-group.name
 

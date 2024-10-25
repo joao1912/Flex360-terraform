@@ -1,7 +1,7 @@
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "flex-360.s3-website-sa-east-1.amazonaws.com"
+    domain_name = "http://flex360-front-ae8fh.s3-website-us-east-1.amazonaws.com"
     origin_id   = "S3-flex-360"
 
     custom_origin_config {
@@ -33,7 +33,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     max_ttl                = 86400
   }
 
-  price_class = "PriceClass_100" # alterar para 200 posteriormente
+  price_class = "PriceClass_100"
 
   restrictions {
     geo_restriction {
