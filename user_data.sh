@@ -20,7 +20,7 @@ HTTP_ORIGIN=$(aws ssm get-parameter --name front-flex360-origin --query "Paramet
 
 BUCKET_NAME=$(aws ssm get-parameter --name bucket-flex360 --query "Parameter.Value" --output text)
 
-SECRET_KEY=$(aws secretsmanager get-secret-value --secret-id secret_key_token --query "SecretString" --output text | jq -r '.secret_key')
+SECRET_KEY=$(aws secretsmanager get-secret-value --secret-id prod/token/secret_key --query "SecretString" --output text)
 
 DB_NAME="flex-database"
 DB_PORT=$(echo "$DB_DATA" | grep '^DB_PORT=' | cut -d '=' -f2)
