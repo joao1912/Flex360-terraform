@@ -4,7 +4,7 @@ resource "aws_autoscaling_group" "flex360-autoScaling" {
   desired_capacity = var.desired_capacity
   max_size         = var.max_size
   min_size         = var.min_size
-  depends_on = [ aws_secretsmanager_secret.db_host ]
+  depends_on = [ aws_ssm_parameter.db_secrets ]
 
   launch_template {
     id      = aws_launch_template.template-flex360.id

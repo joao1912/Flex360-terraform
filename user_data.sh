@@ -24,7 +24,7 @@ HTTP_ORIGIN=$(aws ssm get-parameter --name front-flex360-origin --query "Paramet
 
 BUCKET_NAME=$(aws ssm get-parameter --name bucket-flex360 --query "Parameter.Value" --output text)
 
-SECRET_KEY=$(aws secretsmanager get-secret-value --secret-id prod/token/secret_key --query "SecretString" --output text)
+SECRET_KEY=$(aws secretsmanager get-secret-value --secret-id prod/token/secret_key --query "SecretString" --output text | jq -r '.secret_key_token')
 
 DB_NAME="flex360db"
 #DB_PORT=$(echo "$DB_DATA" | grep '^DB_PORT=' | cut -d '=' -f2)
@@ -32,17 +32,18 @@ DB_NAME="flex360db"
 
 DB_HOST=$(echo "$DB_DATA" | jq -r '.DB_HOST')
 DB_PORT=$(echo "$DB_DATA" | jq -r '.DB_PORT')
+DB_USERNAME=$(echo "$DB_DATA" | jq -r '.DB_USERNAME')
+DB_PASSWORD=$(echo "$DB_DATA" | jq -r '.DB_PASSWORD')
 
 echo "$DB_DATA" > "$PATH_ENV"
 
 echo "DB_URL=jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME" >> "$PATH_ENV"
-
-echo "BUCKET=$BUCKET_NAME" >> /config/env/.env
-
-echo "HTTP_ORIGIN=$HTTP_ORIGIN" >> /config/env/.env
-
-echo "SECRET_KEY=$SECRET_KEY" >> /config/env/.env
-
-echo "PROFILE=prod" >> /config/env/.env
+echo "DB_USERNAME=$DB_USERNAME" >> "$PATH_ENV"
+echo "DB_PASSWORD=$DB_PASSWORD" >> "$PATH_ENV"
+echo "BUCKET=$BUCKET_NAME" >> "$PATH_ENV"
+echo "HTTP_ORIGIN=$HTTP_ORIGIN" >> "$PATH_ENV"
+echo "SECRET_KEY=$SECRET_KEY" >> "$PATH_ENV"
+echo "PROFILE=prod">> "$PATH_ENV"
+echo "PORT=80">> "$PATH_ENV"
 
 docker run -d --restart always -p 80:80 -v /config/env/.env:/app/.env joaopedrot1912/flex360-api
