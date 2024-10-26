@@ -1,4 +1,4 @@
-resource "aws_secretsmanager_secret" "db_host" {
+/* resource "aws_secretsmanager_secret" "db_host" {
   name        = "secrets_database"
   description = "Segredos do banco de dados."
 }
@@ -25,6 +25,30 @@ resource "aws_secretsmanager_secret_version" "secret_alb_dns" {
   secret_string = jsonencode({
     dns_name = aws_lb.alb-flex360.dns_name
   })
+}
+
+*/
+
+resource "aws_ssm_parameter" "db_secrets" {
+  name  = "/prod/secrets/database"
+  type  = "SecureString"
+  value = jsonencode({
+    DB_HOST     = aws_db_instance.database-flex360.address
+    DB_USERNAME = "joao"
+    DB_PASSWORD = "senha123"
+    DB_PORT     = aws_db_instance.database-flex360.port
+  })
+
+  description = "Segredos do banco de dados"
+}
+
+# Criando um parâmetro único para o DNS do Load Balancer
+resource "aws_ssm_parameter" "alb_dns" {
+  name  = "/prod/secrets/alb_dns"
+  type  = "String"                   
+  value = aws_lb.alb-flex360.dns_name
+
+  description = "DNS do Load Balancer da API"
 }
 
 //alterado
