@@ -42,6 +42,17 @@ resource "aws_ssm_parameter" "db_secrets" {
   description = "Segredos do banco de dados"
 }
 
+resource "aws_ssm_parameter" "cache_secrets" {
+  name  = "/prod/secrets/cache"
+  type  = "SecureString"
+  value = jsonencode({
+    CACHE_HOST = aws_elasticache_cluster.cache_cluster.configuration_endpoint
+    CACHE_PORT     = 6379
+  })
+
+  description = "Segredos do banco de dados"
+}
+
 # Criando um parâmetro único para o DNS do Load Balancer
 resource "aws_ssm_parameter" "alb_dns" {
   name  = "/prod/secrets/alb_dns"
