@@ -46,7 +46,7 @@ resource "aws_ssm_parameter" "cache_secrets" {
   name  = "/prod/secrets/cache"
   type  = "SecureString"
   value = jsonencode({
-    CACHE_HOST = aws_elasticache_cluster.cache_cluster.primary_endpoint_address
+    CACHE_HOST = aws_elasticache_cluster.cache_cluster.cache_nodes[0].address
     CACHE_PORT     = 6379
   })
 
