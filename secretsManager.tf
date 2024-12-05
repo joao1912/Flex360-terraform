@@ -66,9 +66,8 @@ resource "aws_ssm_parameter" "alb_dns" {
 
 resource "aws_ssm_parameter" "front_flex360_origin" {
   name  = "front-flex360-origin"
-  depends_on = [ aws_cloudfront_distribution.s3_distribution ]
   type  = "String"
-  value = join("", ["http://", aws_cloudfront_distribution.s3_distribution.domain_name])
+  value = "http://flex360-front-ae8fh.s3-website-us-east-1.amazonaws.com"
   tags = {
     Name = "flex-360-origin-parameter"
   }

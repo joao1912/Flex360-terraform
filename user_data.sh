@@ -36,6 +36,11 @@ echo "BUCKET=$BUCKET_NAME" >> "$PATH_ENV"
 echo "HTTP_ORIGIN=$HTTP_ORIGIN" >> "$PATH_ENV"
 echo "SECRET_KEY=$SECRET_KEY" >> "$PATH_ENV"
 
+yum install -y amazon-ssm-agent
+
+sudo systemctl enable amazon-ssm-agent
+sudo systemctl start amazon-ssm-agent
+
 docker run -d --restart always -p 80:8080 \
   -e SPRING_PROFILES_ACTIVE=prod \
   -e DB_URL="jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME" \

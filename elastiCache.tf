@@ -14,7 +14,7 @@ resource "aws_elasticache_cluster" "cache_cluster" {
   engine               = "redis"
   node_type            = "cache.t2.micro"
   num_cache_nodes      = 1
-  parameter_group_name = aws_elasticache_parameter_group.redis7_parameter_group.name  # Use o novo grupo de parâmetros
+  parameter_group_name = aws_elasticache_parameter_group.redis7_parameter_group.name
   subnet_group_name    = aws_elasticache_subnet_group.subnetes_caches.name
   port                 = 6379
 }
