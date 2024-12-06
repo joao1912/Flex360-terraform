@@ -20,6 +20,8 @@ PATH_ENV="/config/env/.env"
 
 DB_DATA=$(aws ssm get-parameter --name /prod/secrets/database --with-decryption --query "Parameter.Value" --output text)
 
+CACHE_DATA=$(aws ssm get-parameter --name /prod/secrets/cache --with-decryption --query "Parameter.Value" --output text)
+
 HTTP_ORIGIN=$(aws ssm get-parameter --name front-flex360-origin --query "Parameter.Value" --output text)
 
 BUCKET_NAME=$(aws ssm get-parameter --name bucket-flex360 --query "Parameter.Value" --output text)
@@ -29,6 +31,8 @@ SECRET_KEY=$(aws secretsmanager get-secret-value --secret-id prod/token/secret_k
 DB_NAME="flex360db"
 DB_HOST=$(echo "$DB_DATA" | jq -r '.DB_HOST')
 DB_PORT=$(echo "$DB_DATA" | jq -r '.DB_PORT')
+CACHE_HOST=$(echo "$CACHE_DATA" | jq -r '.CACHE_HOST')
+CACHE_PORT=$(echo "$CACHE_DATA" | jq -r '.CACHE_PORT')
 DB_USERNAME=$(echo "$DB_DATA" | jq -r '.DB_USERNAME')
 DB_PASSWORD=$(echo "$DB_DATA" | jq -r '.DB_PASSWORD')
 
@@ -48,4 +52,6 @@ docker run -d --restart always -p 80:8080 \
   -e DB_PASSWORD="$DB_PASSWORD" \
   -e PORT=8080 \
   -e DB_PORT="$DB_PORT" \
+  -e CACHE_HOST="$CACHE_HOST" \
+  -e CACHE_PORT="$CACHE_PORT" \
   joaopedrot1912/flex360-api

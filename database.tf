@@ -49,10 +49,10 @@ resource "aws_db_instance" "database-flex360" {
   storage_type            = "gp2"
   publicly_accessible     = false
   skip_final_snapshot     = true
-  backup_retention_period  = 7
+  backup_retention_period = 7
   multi_az                = false
   db_name                 = "flex360db"
-  vpc_security_group_ids   = [aws_security_group.sg-db.id]
-  db_subnet_group_name     = aws_db_subnet_group.rds-subnet-group.name
-  parameter_group_name = aws_db_parameter_group.rds-parameter-group.name
+  vpc_security_group_ids  = [aws_security_group.sg-db.id]
+  db_subnet_group_name    = aws_db_subnet_group.rds-subnet-group.name
+  parameter_group_name    = aws_db_parameter_group.rds-parameter-group.name
 }
