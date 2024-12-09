@@ -17,22 +17,69 @@ resource "aws_iam_role" "ec2_role" {
 
 resource "aws_iam_policy" "ssm_secrets_policy" {
   name        = "SSMAndSecretsManagerFullAccess"
-  description = "IAM policy that provides full access to SSM Parameter Store and Secrets Manager"
+  description = "IAM policy that provides full access to SSM Parameter Store, Secrets Manager, and S3 ListBucket"
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
+        "Effect" : "Allow",
+        "Action" : [
+          "ssm:DescribeAssociation",
+          "ssm:GetDeployablePatchSnapshotForInstance",
+          "ssm:GetDocument",
+          "ssm:DescribeDocument",
+          "ssm:GetManifest",
+          "ssm:GetParameter",
+          "ssm:GetParameters",
+          "ssm:ListAssociations",
+          "ssm:ListInstanceAssociations",
+          "ssm:PutInventory",
+          "ssm:PutComplianceItems",
+          "ssm:PutConfigurePackageResult",
+          "ssm:UpdateAssociationStatus",
+          "ssm:UpdateInstanceAssociationStatus",
+          "ssm:UpdateInstanceInformation"
+        ],
+        "Resource" : "*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "ssmmessages:CreateControlChannel",
+          "ssmmessages:CreateDataChannel",
+          "ssmmessages:OpenControlChannel",
+          "ssmmessages:OpenDataChannel"
+        ],
+        "Resource" : "*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "ec2messages:AcknowledgeMessage",
+          "ec2messages:DeleteMessage",
+          "ec2messages:FailMessage",
+          "ec2messages:GetEndpoint",
+          "ec2messages:GetMessages",
+          "ec2messages:SendReply"
+        ],
+        "Resource" : "*"
+      },
+      {
         Action = [
-          "ssm:*",
-          "secretsmanager:*"
+          "s3:ListBucket",
+          "s3:GetObject"
         ]
-        Effect   = "Allow"
-        Resource = "*"
+        Effect = "Allow"
+        Resource = [
+          "arn:aws:s3:::flex360-front-ae8fh",
+          "arn:aws:s3:::flex360-front-ae8fh/*"
+        ]
       }
     ]
   })
 }
+
 
 resource "aws_iam_policy_attachment" "attach_ssm_secrets_policy" {
   name       = "attach_ssm_secrets_policy"
@@ -93,6 +140,10 @@ resource "aws_launch_template" "template-flex360" {
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  tags = {
+    Name = "flex360-backend"
   }
 
 }

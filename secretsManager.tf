@@ -30,8 +30,8 @@ resource "aws_secretsmanager_secret_version" "secret_alb_dns" {
 */
 
 resource "aws_ssm_parameter" "db_secrets" {
-  name  = "/prod/secrets/database"
-  type  = "SecureString"
+  name = "/prod/secrets/database"
+  type = "SecureString"
   value = jsonencode({
     DB_HOST     = aws_db_instance.database-flex360.address
     DB_USERNAME = "joao"
@@ -43,11 +43,11 @@ resource "aws_ssm_parameter" "db_secrets" {
 }
 
 resource "aws_ssm_parameter" "cache_secrets" {
-  name  = "/prod/secrets/cache"
-  type  = "SecureString"
+  name = "/prod/secrets/cache"
+  type = "SecureString"
   value = jsonencode({
     CACHE_HOST = aws_elasticache_cluster.cache_cluster.cache_nodes[0].address
-    CACHE_PORT     = 6379
+    CACHE_PORT = 6379
   })
 
   description = "Segredos do banco de dados"
@@ -56,19 +56,16 @@ resource "aws_ssm_parameter" "cache_secrets" {
 # Criando um parâmetro único para o DNS do Load Balancer
 resource "aws_ssm_parameter" "alb_dns" {
   name  = "/prod/secrets/alb_dns"
-  type  = "String"                   
+  type  = "String"
   value = aws_lb.alb-flex360.dns_name
 
   description = "DNS do Load Balancer da API"
 }
 
-//alterado
-
-resource "aws_ssm_parameter" "front_flex360_origin" {
-  name  = "front-flex360-origin"
+resource "aws_ssm_parameter" "alb_dns_front" {
+  name  = "/prod/alb_dns_front"
   type  = "String"
-  value = "http://flex360-front-ae8fh.s3-website-us-east-1.amazonaws.com"
-  tags = {
-    Name = "flex-360-origin-parameter"
-  }
+  value = aws_lb.alb-flex360-frontend.dns_name
+
+  description = "DNS do Load Balancer do frontend"
 }
