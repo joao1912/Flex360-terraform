@@ -49,7 +49,7 @@ resource "aws_launch_template" "template-flex360-front" {
     create_before_destroy = true
   }
 
-   tags = {
+  tags = {
     Name = "flex360-frontend"
   }
 

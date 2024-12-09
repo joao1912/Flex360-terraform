@@ -25,17 +25,17 @@ variable "instance_type" {
 
 variable "desired_capacity" {
   description = "Capacidade desejada de instancias"
-  default     = 1
+  default     = 2
 }
 
 variable "max_size" {
   description = "Quantidade maxima de instancias"
-  default     = 1
+  default     = 4
 }
 
 variable "min_size" {
   description = "Quantidade minima de instancias"
-  default     = 1
+  default     = 2
 }
 
 variable "vpc_cidr_block" {

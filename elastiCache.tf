@@ -4,12 +4,12 @@ resource "aws_security_group" "SG-cache" {
 }
 
 resource "aws_security_group_rule" "access_cache_ingress" {
-  type              = "ingress"
+  type                     = "ingress"
   source_security_group_id = aws_security_group.sg-ec2-flex360.id
-  from_port         = 6379
-  to_port           = 6379
-  protocol          = "tcp"
-  security_group_id = aws_security_group.SG-cache.id
+  from_port                = 6379
+  to_port                  = 6379
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.SG-cache.id
 }
 
 resource "aws_security_group_rule" "access_cache_egress" {
@@ -40,5 +40,5 @@ resource "aws_elasticache_cluster" "cache_cluster" {
   parameter_group_name = aws_elasticache_parameter_group.redis7_parameter_group.name
   subnet_group_name    = aws_elasticache_subnet_group.subnetes_caches.name
   port                 = 6379
-  security_group_ids = [ aws_security_group.SG-cache.id ]
+  security_group_ids   = [aws_security_group.SG-cache.id]
 }
